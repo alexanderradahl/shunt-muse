@@ -1,7 +1,14 @@
 {
   "name": "muse-shunt",
-  "owner": { "name": "Alexander Benz" },
+  "owner": {
+    "name": "Alexander Benz"
+  },
   "plugins": [
-    { "name": "shunt-muse", "source": "./plugins/shunt-muse", "description": "Spotify's shunt, delegating bulk reads and boilerplate to Muse Spark instead of Portal AiKA." }
-  ]
+    {
+      "name": "shunt-muse",
+      "source": "./plugins/shunt-muse",
+      "description": "Spotify's shunt, delegating bulk reads and boilerplate to Muse Spark instead of Portal AiKA."
+    }
+  ],
+  "description": "shunt-muse: keep big file reads out of your agent's context by delegating them to Muse Spark."
 }
