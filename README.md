@@ -15,7 +15,7 @@ Every call is one shot. A follow-up question sends the files again, which costs 
 
 ## Numbers
 
-One run on a 617-line test file: about 4,800 tokens went to Muse and roughly 300 came back, in 24 seconds at `low` effort. The answer matched the file when checked by hand. Spotify reports 82-94% savings with the original plugin on a 162K-line Java monorepo; I haven't reproduced that here.
+One run on a 617-line test file: about 4,800 tokens went to Muse and roughly 300 came back, in 24 seconds at `low` effort. At the default `xhigh`, a 1,055-line file took about 30 seconds and every cited line number was exact. Spotify reports 82-94% savings with the original plugin on a 162K-line Java monorepo; I haven't reproduced that here.
 
 ## Requirements
 
@@ -71,7 +71,7 @@ Environment variables:
 | --- | --- | --- |
 | `SHUNT_MIN_LINES` | `350` | Files longer than this get blocked |
 | `SHUNT_MUSE_MODEL` | `muse-spark-1.3-contributor` | Model passed to `muse exec --model` |
-| `SHUNT_MUSE_EFFORT` | `low` | `--reasoning-effort`; raise it for harder questions |
+| `SHUNT_MUSE_EFFORT` | `xhigh` | `--reasoning-effort`; lower it (e.g. `low`) for faster reads |
 | `SHUNT_TIMEOUT_SECONDS` | `300` | Kill a Muse call after this long |
 | `SHUNT_MAX_PAYLOAD_BYTES` | `600000` | Refuse requests bigger than this; split them instead |
 | `SHUNT_MUSE_BIN` | `muse` | Path to the Muse binary |

@@ -10,8 +10,8 @@ SHUNT_MAX_PAYLOAD_BYTES="${SHUNT_MAX_PAYLOAD_BYTES:-600000}"
 SHUNT_TIMEOUT_SECONDS="${SHUNT_TIMEOUT_SECONDS:-300}"
 SHUNT_MUSE_BIN="${SHUNT_MUSE_BIN:-muse}"
 SHUNT_MUSE_MODEL="${SHUNT_MUSE_MODEL:-muse-spark-1.3-contributor}"
-# ponytail: low effort keeps a bulk read around 20-60s; raise for harder questions.
-SHUNT_MUSE_EFFORT="${SHUNT_MUSE_EFFORT:-low}"
+# xhigh measured ~30s on a 1,055-line read (low: ~25s); lower it if speed matters more.
+SHUNT_MUSE_EFFORT="${SHUNT_MUSE_EFFORT:-xhigh}"
 
 # The two AiKA modes' instructions, carried in the prompt instead of server-side.
 SHUNT_MODE_bulk_reader="You are a precise code analyst. Read the provided files and answer the question concisely. Output structured bullets only. No greetings, no prose, no preambles, no summaries. Lead every bullet with the exact name, type, or line number. Use nested bullets for details. Skip anything the caller did not ask for."
