@@ -1,0 +1,15 @@
+shunt-muse
+Copyright 2026 Alexander Benz
+
+This product is a modified version of "shunt" from spotify/portal-ai-plugins
+(https://github.com/spotify/portal-ai-plugins, commit 3c24ca3), licensed under
+the Apache License, Version 2.0.
+
+Changes from upstream:
+- scripts/lib/aika.sh (Portal CLI / AiKA transport) replaced by
+  scripts/lib/muse.sh, which runs one headless `muse exec` turn.
+- The bulk-reader and code-writer mode instructions now travel in the prompt.
+- Hooks block by exiting 2 with the reason on stderr, and allow silently, so
+  the same scripts work as Claude Code and Codex PreToolUse hooks.
+- check-bash-read accepts a shell command given as an argv array.
+- Skill and hook text now points at Muse instead of AiKA.

@@ -1,0 +1,7 @@
+{
+  "name": "shunt-muse",
+  "version": "0.2.0-muse.1",
+  "description": "Fork of spotify/portal-ai-plugins shunt: hooks block large file reads and redirect to bulk-reader/code-writer scripts backed by muse exec (Muse Spark) instead of Portal AiKA.",
+  "license": "Apache-2.0",
+  "skills": "./skills/"
+}

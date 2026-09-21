@@ -1,0 +1,7 @@
+{
+  "name": "muse-shunt",
+  "owner": { "name": "Alexander Benz" },
+  "plugins": [
+    { "name": "shunt-muse", "source": "./plugins/shunt-muse", "description": "Spotify's shunt, delegating bulk reads and boilerplate to Muse Spark instead of Portal AiKA." }
+  ]
+}
