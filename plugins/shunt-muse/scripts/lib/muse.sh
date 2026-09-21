@@ -10,8 +10,8 @@ SHUNT_MAX_PAYLOAD_BYTES="${SHUNT_MAX_PAYLOAD_BYTES:-600000}"
 SHUNT_TIMEOUT_SECONDS="${SHUNT_TIMEOUT_SECONDS:-300}"
 SHUNT_MUSE_BIN="${SHUNT_MUSE_BIN:-muse}"
 SHUNT_MUSE_MODEL="${SHUNT_MUSE_MODEL:-muse-spark-1.3-contributor}"
-# xhigh measured ~30s on a 1,055-line read (low: ~25s); lower it if speed matters more.
-SHUNT_MUSE_EFFORT="${SHUNT_MUSE_EFFORT:-xhigh}"
+# high: ~19s on a 1,055-line read with exact line numbers (xhigh: ~32s, same answer).
+SHUNT_MUSE_EFFORT="${SHUNT_MUSE_EFFORT:-high}"
 
 # The two AiKA modes' instructions, carried in the prompt instead of server-side.
 SHUNT_MODE_bulk_reader="You are a precise code analyst. Read the provided files and answer the question concisely. Output structured bullets only. No greetings, no prose, no preambles, no summaries. Lead every bullet with the exact name, type, or line number. Use nested bullets for details. Skip anything the caller did not ask for."
@@ -49,8 +49,9 @@ shunt_invoke() {
   shunt_tmpfile prompt_file || return 1
   shunt_tmpfile err_file || return 1
   shunt_tmpfile out_file || return 1
-  # Empty, trusted workspace: everything Muse needs is inline, so it gets
-  # nothing to wander into and never stalls on a trust prompt.
+  # Empty, untrusted workspace plus the lean preset: everything Muse needs is
+  # inline, so skip workspace skills, Claude/Codex skills and web tools. Cuts
+  # Muse's own prompt overhead from ~26k to ~20k tokens per call.
   workdir=$(mktemp -d) || return 1
   SHUNT_TMPFILES+=("$workdir")
 
@@ -64,7 +65,8 @@ shunt_invoke() {
   perl -e 'alarm shift; exec @ARGV or die' "$SHUNT_TIMEOUT_SECONDS" \
     "$SHUNT_MUSE_BIN" exec --prompt-file "$prompt_file" \
       --model "$SHUNT_MUSE_MODEL" --reasoning-effort "$SHUNT_MUSE_EFFORT" \
-      --max-model-steps 1 --workspace "$workdir" --trust-workspace \
+      --max-model-steps 1 --workspace "$workdir" \
+      --preset native-basic --no-foreign-personal-context --disable-web-tools \
       >"$out_file" 2>"$err_file"
   rc=$?
 
