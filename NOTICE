@@ -12,4 +12,5 @@ Changes from upstream:
 - Hooks block by exiting 2 with the reason on stderr, and allow silently, so
   the same scripts work as Claude Code and Codex PreToolUse hooks.
 - check-bash-read accepts a shell command given as an argv array.
+- bulk-read numbers each line in the prompt, so cited line numbers are exact.
 - Skill and hook text now points at Muse instead of AiKA.

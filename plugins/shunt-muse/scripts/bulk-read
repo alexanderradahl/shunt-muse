@@ -39,13 +39,13 @@ done
 shunt_preflight || exit 1
 shunt_tmpfile message_file || exit 1
 
-# Wrap each file in XML tags so the model sees clear boundaries. Stream
-# straight into the message file: no corpus-sized shell variable, and file
-# contents survive byte-for-byte.
+# Wrap each file in XML tags so the model sees clear boundaries. Each line is
+# prefixed with its number and a tab: models count lines badly, and answers
+# lead with line numbers. Streamed straight into the message file.
 for path in "${paths[@]}"; do
   {
-    printf '<file path="%s">\n' "$path"
-    cat "$path"
+    printf '<file path="%s" numbered="true">\n' "$path"
+    awk '{ printf "%d\t%s\n", NR, $0 }' "$path"
     printf '</file>\n\n'
   } >> "$message_file"
 done
